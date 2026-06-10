@@ -49,91 +49,108 @@ const PAGE_DATA = [
 const TOTAL_PAGES = PAGE_DATA.length;
 let currentPage = 1;
 
-const accessScreen = document.getElementById('accessScreen');
-const bookScreen = document.getElementById('bookScreen');
-const accessInput = document.getElementById('accessInput');
-const openBookBtn = document.getElementById('openBookBtn');
-const errorMessage = document.getElementById('errorMessage');
-const pageImage = document.getElementById('pageImage');
-const pageText = document.getElementById('pageText');
-const pageCounter = document.getElementById('pageCounter');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const restartBtn = document.getElementById('restartBtn');
-const bookPage = document.getElementById('bookPage');
+document.addEventListener('DOMContentLoaded', () => {
+  const accessScreen = document.getElementById('accessScreen');
+  const bookScreen = document.getElementById('bookScreen');
+  const accessInput = document.getElementById('accessInput');
+  const openBookBtn = document.getElementById('openBookBtn');
+  const errorMessage = document.getElementById('errorMessage');
+  const pageImage = document.getElementById('pageImage');
+  const pageText = document.getElementById('pageText');
+  const pageCounter = document.getElementById('pageCounter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const restartBtn = document.getElementById('restartBtn');
+  const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+  const bookPage = document.getElementById('bookPage');
 
-// Actualiza los datos visibles del libro cuando cambia la página.
-function updateBookContent(page) {
-  const pageData = PAGE_DATA[page - 1];
-  const imageSrc = `assets/images/${pageData.image}`;
+  // Actualiza los datos visibles del libro cuando cambia la página.
+  function updateBookContent(page) {
+    const pageData = PAGE_DATA[page - 1];
+    const imageSrc = `assets/images/${pageData.image}`;
 
-  pageImage.src = imageSrc;
-  pageImage.alt = `Foto de recuerdo ${page}`;
-  pageText.textContent = pageData.text;
-  pageCounter.textContent = `Página ${page} de ${TOTAL_PAGES}`;
+    pageImage.src = imageSrc;
+    pageImage.alt = `Foto de recuerdo ${page}`;
+    pageText.textContent = pageData.text;
+    pageCounter.textContent = `Página ${page} de ${TOTAL_PAGES}`;
 
-  prevBtn.disabled = page === 1;
-  prevBtn.classList.toggle('disabled', page === 1);
+    prevBtn.disabled = page === 1;
+    prevBtn.classList.toggle('disabled', page === 1);
 
-  if (page === TOTAL_PAGES) {
-    nextBtn.textContent = 'Final';
-    restartBtn.classList.remove('hidden');
-  } else {
-    nextBtn.textContent = 'Siguiente';
-    restartBtn.classList.add('hidden');
+    if (page === TOTAL_PAGES) {
+      nextBtn.textContent = 'Final';
+      restartBtn.classList.remove('hidden');
+      downloadPdfBtn.classList.remove('hidden');
+    } else {
+      nextBtn.textContent = 'Siguiente';
+      restartBtn.classList.add('hidden');
+      downloadPdfBtn.classList.add('hidden');
+    }
   }
-}
 
-function animatePageChange(nextPage) {
-  bookPage.classList.add('fade-out');
-  setTimeout(() => {
-    currentPage = nextPage;
+  function animatePageChange(nextPage) {
+    bookPage.classList.add('fade-out');
+    setTimeout(() => {
+      currentPage = nextPage;
+      updateBookContent(currentPage);
+      bookPage.classList.remove('fade-out');
+    }, 250);
+  }
+
+  function showBookScreen() {
+    accessScreen.classList.remove('active');
+    bookScreen.classList.add('active');
+    bookScreen.setAttribute('aria-hidden', 'false');
+    accessInput.value = '';
+    errorMessage.textContent = '';
     updateBookContent(currentPage);
-    bookPage.classList.remove('fade-out');
-  }, 250);
-}
+  }
 
-function showBookScreen() {
-  accessScreen.classList.remove('active');
-  bookScreen.classList.add('active');
-  bookScreen.setAttribute('aria-hidden', 'false');
-  accessInput.value = '';
-  errorMessage.textContent = '';
+  function handleAccess() {
+    const typedKey = accessInput.value.trim().toLowerCase();
+    if (typedKey === ACCESS_KEY.toLowerCase()) {
+      showBookScreen();
+    } else {
+      errorMessage.textContent = 'Esa no es la clave correcta ❤️';
+      accessInput.focus();
+    }
+  }
+
+  openBookBtn.addEventListener('click', handleAccess);
+  accessInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      handleAccess();
+    }
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (currentPage > 1) {
+      animatePageChange(currentPage - 1);
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (currentPage < TOTAL_PAGES) {
+      animatePageChange(currentPage + 1);
+    }
+  });
+
+  restartBtn.addEventListener('click', () => {
+    currentPage = 1;
+    animatePageChange(currentPage);
+  });
+
+  if (window.initPdfDownload) {
+    window.initPdfDownload({
+      downloadBtn: downloadPdfBtn,
+      bookPage,
+      updateBookContent,
+      totalPages: TOTAL_PAGES,
+      getCurrentPage: () => currentPage,
+      setCurrentPage: (page) => { currentPage = page; },
+      fileName: 'Libro-de-recuerdos.pdf',
+    });
+  }
+
   updateBookContent(currentPage);
-}
-
-function handleAccess() {
-  const typedKey = accessInput.value.trim().toLowerCase();
-  if (typedKey === ACCESS_KEY.toLowerCase()) {
-    showBookScreen();
-  } else {
-    errorMessage.textContent = 'Esa no es la clave correcta ❤️';
-    accessInput.focus();
-  }
-}
-
-openBookBtn.addEventListener('click', handleAccess);
-accessInput.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    handleAccess();
-  }
 });
-
-prevBtn.addEventListener('click', () => {
-  if (currentPage > 1) {
-    animatePageChange(currentPage - 1);
-  }
-});
-
-nextBtn.addEventListener('click', () => {
-  if (currentPage < TOTAL_PAGES) {
-    animatePageChange(currentPage + 1);
-  }
-});
-
-restartBtn.addEventListener('click', () => {
-  currentPage = 1;
-  animatePageChange(currentPage);
-});
-
-updateBookContent(currentPage);

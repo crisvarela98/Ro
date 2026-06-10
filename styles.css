@@ -290,6 +290,11 @@ body::before {
   color: #5c3a31;
 }
 
+.download-btn {
+  background: linear-gradient(135deg, #b6739e, #8f4f7f);
+  color: white;
+}
+
 .hidden {
   display: none;
 }
