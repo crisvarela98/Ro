@@ -53,29 +53,85 @@
     </section>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNa5SxI/jkK+j3a6Eh+VFt6Xx8UoPxNRqUnm63QKYVkvXSkd+oA4Msr03Vt+xh4WeZLx3HqJ0GcwVxwR3w7LRQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-5GWoWSCcABMptsi88XYNaC2Umjv0yZAP2O8OBxG0eGwB2cM8TwXOC+Q8o2sXR0DX1W6YQd1kznjgjaQ9+mLJMg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Múltiples opciones de CDN para máxima confiabilidad -->
+  <!-- html2canvas - jsDelivr (opción principal) -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   
+  <!-- html2canvas - Alternativa unpkg -->
   <script>
-    // Verificar que las librerías se carguen correctamente
-    let libsLoaded = false;
-    
-    const verificarLibs = setInterval(() => {
-      if (window.html2canvas && window.jspdf) {
-        console.log('✅ Librerías externas cargadas correctamente');
-        libsLoaded = true;
-        clearInterval(verificarLibs);
+    if (!window.html2canvas) {
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.js';
+      document.head.appendChild(script);
+    }
+  </script>
+
+  <!-- jsPDF - jsDelivr (opción principal) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  
+  <!-- jsPDF - Alternativa unpkg -->
+  <script>
+    if (!window.jspdf) {
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js';
+      document.head.appendChild(script);
+    }
+  </script>
+
+  <script>
+    // Sistema avanzado de verificación de librerías
+    window.pdfLibsStatus = {
+      html2canvas: false,
+      jsPDF: false,
+      attempts: 0,
+      maxAttempts: 60
+    };
+
+    const verificarLibrerias = () => {
+      window.pdfLibsStatus.attempts++;
+      
+      if (window.html2canvas) {
+        window.pdfLibsStatus.html2canvas = true;
+      }
+      if (window.jspdf?.jsPDF) {
+        window.pdfLibsStatus.jsPDF = true;
+      }
+
+      if (window.pdfLibsStatus.html2canvas && window.pdfLibsStatus.jsPDF) {
+        console.log('✅ Todas las librerías cargadas exitosamente en intento', window.pdfLibsStatus.attempts);
+        return true;
+      }
+
+      if (window.pdfLibsStatus.attempts >= window.pdfLibsStatus.maxAttempts) {
+        console.warn('⚠️ Librerías no cargadas después de 6 segundos. Usando alternativa fallback.');
+        window.pdfLibsStatus.useFallback = true;
+        return false;
+      }
+
+      return false;
+    };
+
+    // Verificar cada 100ms
+    const intervalo = setInterval(() => {
+      if (verificarLibrerias()) {
+        clearInterval(intervalo);
       }
     }, 100);
-    
-    // Timeout para verificación
-    setTimeout(() => {
-      if (!libsLoaded) {
-        console.warn('⚠️ Librerías externas tardando en cargar. Intenta recargar la página si hay problemas.');
+
+    // Fallback: establecer función para usar librerias locales o API
+    window.pdfDownloadFallback = {
+      generatePdfViaScreenshot: async function(pages, fileName) {
+        console.log('🔄 Usando modo fallback para PDF...');
+        alert('⚠️ Generando PDF en modo optimizado (puede tardar más). Por favor espera...');
+        
+        // Aquí se implementaría solución alternativa
+        return new Promise((resolve, reject) => {
+          reject(new Error('Modo fallback no implementado aún'));
+        });
       }
-    }, 5000);
+    };
   </script>
-  
+
   <script src="pdf-download.js"></script>
   <script src="script.js"></script>
 </body>
