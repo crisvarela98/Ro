@@ -7,8 +7,8 @@
   --rose: #d88a9b;
   --rose-dark: #b15467;
   --gold: #d8b57a;
-  --text: #4b2f35;
-  --text-soft: #6f4f55;
+  --text: #3f242c;
+  --text-soft: #5c3d46;
   --shadow: 0 22px 60px rgba(87, 44, 56, 0.14);
   --radius: 28px;
 }
@@ -44,7 +44,7 @@ body::before {
   padding: 32px 18px;
 }
 
-.access-screen,
+..access-screen,
 .book-screen {
   width: min(1000px, 100%);
   max-width: 960px;
@@ -52,6 +52,11 @@ body::before {
 
 .access-screen {
   position: relative;
+  display: none;
+}
+
+.access-screen.active {
+  display: block;
 }
 
 .access-card {
@@ -162,7 +167,7 @@ body::before {
   display: block;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: #a6707a;
+  color: #7f4d5d;
   font-size: 0.82rem;
 }
 
@@ -171,7 +176,7 @@ body::before {
   font-size: clamp(1.9rem, 4vw, 2.7rem);
   line-height: 1.05;
   font-family: 'Dancing Script', cursive;
-  color: #784252;
+  color: #5f3441;
 }
 
 .page-counter {
@@ -229,25 +234,18 @@ body::before {
 .page-text {
   position: relative;
   padding: 28px 28px 22px;
-  background: rgba(255, 250, 245, 0.96);
+  background: rgba(255, 249, 244, 0.98);
   border-radius: 24px;
-  border: 1px solid rgba(216, 180, 154, 0.22);
+  border: 1px solid rgba(216, 167, 148, 0.24);
 }
 
 .page-text p {
   margin: 0 0 18px;
   font-size: clamp(1rem, 2.5vw, 1.15rem);
   line-height: 1.8;
-  color: #5a3d43;
+  color: #4c2a33;
   font-family: 'Dancing Script', cursive;
 }
-
-.page-number {
-  display: inline-flex;
-  padding: 12px 18px;
-  border-radius: 999px;
-  background: rgba(216, 159, 148, 0.14);
-  color: #8a5b64;
   font-size: 0.95rem;
   font-weight: 600;
 }

@@ -56,7 +56,6 @@ const openBookBtn = document.getElementById('openBookBtn');
 const errorMessage = document.getElementById('errorMessage');
 const pageImage = document.getElementById('pageImage');
 const pageText = document.getElementById('pageText');
-const pageNumber = document.getElementById('pageNumber');
 const pageCounter = document.getElementById('pageCounter');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -71,7 +70,6 @@ function updateBookContent(page) {
   pageImage.src = imageSrc;
   pageImage.alt = `Foto de recuerdo ${page}`;
   pageText.textContent = pageData.text;
-  pageNumber.textContent = page;
   pageCounter.textContent = `Página ${page} de ${TOTAL_PAGES}`;
 
   prevBtn.disabled = page === 1;
