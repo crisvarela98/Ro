@@ -44,10 +44,10 @@ body::before {
   padding: 32px 18px;
 }
 
-..access-screen,
+.access-screen,
 .book-screen {
-  width: min(1000px, 100%);
-  max-width: 960px;
+  width: min(900px, 100%);
+  max-width: 860px;
 }
 
 .access-screen {
@@ -190,7 +190,7 @@ body::before {
 
 .book-frame {
   background: linear-gradient(150deg, #fff7f0 0%, #ffecea 48%, #fff9f5 100%);
-  padding: 24px;
+  padding: 28px;
   border-radius: 38px;
   box-shadow: var(--shadow);
   border: 1px solid rgba(255, 255, 255, 0.85);
@@ -198,13 +198,13 @@ body::before {
 
 .book-page {
   display: grid;
-  gap: 22px;
+  gap: 20px;
   grid-template-columns: 1fr;
   align-items: start;
   background: linear-gradient(180deg, rgba(255, 255, 248, 0.98), rgba(255, 245, 239, 0.98));
-  padding: 30px;
+  padding: 26px;
   border-radius: 30px;
-  min-height: 520px;
+  min-height: 540px;
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(210, 163, 143, 0.16);
@@ -233,7 +233,7 @@ body::before {
 
 .page-text {
   position: relative;
-  padding: 28px 28px 22px;
+  padding: 28px 24px 24px;
   background: rgba(255, 249, 244, 0.98);
   border-radius: 24px;
   border: 1px solid rgba(216, 167, 148, 0.24);
@@ -241,29 +241,26 @@ body::before {
 
 .page-text p {
   margin: 0 0 18px;
-  font-size: clamp(1rem, 2.5vw, 1.15rem);
-  line-height: 1.8;
+  font-size: clamp(1.05rem, 2.6vw, 1.32rem);
+  line-height: 1.95;
   color: #4c2a33;
   font-family: 'Dancing Script', cursive;
-}
-  font-size: 0.95rem;
-  font-weight: 600;
 }
 
 .book-actions {
   display: flex;
   justify-content: center;
-  gap: 18px;
-  margin-top: 18px;
+  gap: 12px;
+  margin-top: 20px;
 }
 
 .nav-btn,
 .restart-btn {
-  min-width: 140px;
+  min-width: 100px;
   border: none;
   border-radius: 999px;
-  padding: 16px 20px;
-  font-size: 1rem;
+  padding: 10px 16px;
+  font-size: 0.92rem;
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease, opacity 0.2s ease;
