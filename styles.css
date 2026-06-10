@@ -252,6 +252,7 @@ body::before {
   justify-content: center;
   gap: 12px;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .nav-btn,
@@ -281,8 +282,8 @@ body::before {
 }
 
 .restart-btn {
-  margin: 22px auto 0;
-  display: block;
+  margin: 0;
+  display: inline-block;
   background: linear-gradient(135deg, #f4d0a7, #d7a76a);
   color: #5c3a31;
 }
@@ -297,6 +298,8 @@ body::before {
   box-shadow: 0 8px 20px rgba(230, 59, 92, 0.35);
   transition: all 0.3s ease !important;
   border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  display: inline-block !important;
+  margin: 0 !important;
 }
 
 .download-btn:hover:not(:disabled) {

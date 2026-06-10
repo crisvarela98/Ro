@@ -1,24 +1,27 @@
 window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages, getCurrentPage, setCurrentPage, fileName = 'Libro-de-recuerdos.pdf' }) => {
   // Validación de argumentos requeridos
   if (!downloadBtn || !bookPage || !updateBookContent || typeof getCurrentPage !== 'function' || typeof setCurrentPage !== 'function') {
-    console.error('❌ ERRO EN INICIALIZACIÓN PDF: Faltan argumentos requeridos.');
+    console.error('❌ ERROR EN INICIALIZACIÓN PDF: Faltan argumentos requeridos.');
     return;
   }
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  // Verificar que las librerías estén disponibles
-  const verificarLibrerias = () => {
-    const html2canvas = window.html2canvas;
-    const jsPDF = window.jspdf?.jsPDF;
+  // Esperar a que las librerías estén disponibles
+  const esperarLibrerias = async (maxIntentos = 30) => {
+    for (let i = 0; i < maxIntentos; i++) {
+      const html2canvas = window.html2canvas;
+      const jsPDF = window.jspdf?.jsPDF;
+      
+      if (html2canvas && jsPDF) {
+        console.log('✅ Librerías cargadas correctamente');
+        return { html2canvas, jsPDF };
+      }
+      
+      await sleep(100);
+    }
     
-    if (!html2canvas) {
-      throw new Error('html2canvas no está cargado. Por favor, recarga la página.');
-    }
-    if (!jsPDF) {
-      throw new Error('jsPDF no está cargado. Por favor, recarga la página.');
-    }
-    return { html2canvas, jsPDF };
+    throw new Error('Las librerías no se cargaron. Por favor, recarga la página completamente.');
   };
 
   // Crear elemento para mostrar errores
@@ -59,24 +62,27 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
     
     document.body.appendChild(errorDiv);
     
-    // Auto-cerrar después de 6 segundos
+    // Auto-cerrar después de 8 segundos
     setTimeout(() => {
       if (errorDiv.parentElement) {
         errorDiv.remove();
       }
-    }, 6000);
+    }, 8000);
   };
 
   downloadBtn.addEventListener('click', async () => {
     try {
-      // Verificar disponibilidad de librerías
-      const { html2canvas, jsPDF } = verificarLibrerias();
+      // Esperar a que las librerías estén disponibles
+      const { html2canvas, jsPDF } = await esperarLibrerias();
 
       // Deshabilitar botón y mostrar progreso
       downloadBtn.disabled = true;
       const previousLabel = downloadBtn.textContent;
-      downloadBtn.textContent = '⏳ Generando PDF...';
+      downloadBtn.textContent = '⏳ Cargando librerías...';
       downloadBtn.style.opacity = '0.6';
+
+      // Pequeña pausa para asegurar que todo está listo
+      await sleep(200);
 
       const originalPage = getCurrentPage();
       const pdf = new jsPDF({ 
@@ -85,14 +91,16 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
         compress: true
       });
 
+      downloadBtn.textContent = '⏳ Capturando páginas...';
+
       // Procesar cada página
       for (let page = 1; page <= totalPages; page += 1) {
         try {
           setCurrentPage(page);
           updateBookContent(page);
           
-          // Esperar a que el contenido se renderice
-          await sleep(200);
+          // Esperar a que el contenido se renderice completamente
+          await sleep(300);
 
           // Capturar la página como imagen
           const canvas = await html2canvas(bookPage, {
@@ -100,18 +108,19 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
             scale: 2,
             useCORS: true,
             logging: false,
-            allowTaint: false,
-            imageTimeout: 15000
+            allowTaint: true,
+            imageTimeout: 30000,
+            proxy: null
           });
 
           if (!canvas) {
-            throw new Error(`No se pudo capturar la página ${page}.`);
+            throw new Error(`No se pudo capturar la página ${page}. Intenta nuevamente.`);
           }
 
           const imgData = canvas.toDataURL('image/png');
           
           if (!imgData) {
-            throw new Error(`No se generó la imagen de la página ${page}.`);
+            throw new Error(`No se generó la imagen de la página ${page}. Intenta nuevamente.`);
           }
 
           const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -157,11 +166,11 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
       console.error('❌ ERROR CRÍTICO generando PDF:', error);
       
       // Mostrar error prominente
-      const errorMsg = error.message || 'No se pudo generar el PDF. Intentá nuevamente.';
-      mostrarError(`❌ NO SE PUDO GENERAR EL PDF<br><br>${errorMsg}<br><br>Intentá nuevamente`);
+      const errorMsg = error.message || 'No se pudo generar el PDF. Intenta nuevamente.';
+      mostrarError(`❌ NO SE PUDO GENERAR EL PDF<br><br>${errorMsg}<br><br>Intenta nuevamente`);
       
       // También mostrar alerta como respaldo
-      alert('⚠️ NO SE PUDO GENERAR EL PDF\n\n' + errorMsg + '\n\nIntentá nuevamente');
+      alert('⚠️ NO SE PUDO GENERAR EL PDF\n\n' + errorMsg + '\n\nIntenta nuevamente');
       
       downloadBtn.textContent = previousLabel;
       downloadBtn.style.background = '';
