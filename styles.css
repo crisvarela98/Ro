@@ -288,8 +288,30 @@ body::before {
 }
 
 .download-btn {
-  background: linear-gradient(135deg, #b6739e, #8f4f7f);
-  color: white;
+  background: linear-gradient(135deg, #ff6b9d, #e63b5c) !important;
+  color: white !important;
+  font-weight: 700 !important;
+  min-width: 140px !important;
+  font-size: 1rem !important;
+  padding: 14px 28px !important;
+  box-shadow: 0 8px 20px rgba(230, 59, 92, 0.35);
+  transition: all 0.3s ease !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.download-btn:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 14px 30px rgba(230, 59, 92, 0.45) !important;
+  background: linear-gradient(135deg, #ff4a85, #d91f4d) !important;
+}
+
+.download-btn:active:not(:disabled) {
+  transform: translateY(0) scale(1.02) !important;
+}
+
+.download-btn:disabled {
+  opacity: 0.7 !important;
+  cursor: not-allowed !important;
 }
 
 .hidden {

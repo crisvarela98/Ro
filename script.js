@@ -141,15 +141,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   if (window.initPdfDownload) {
-    window.initPdfDownload({
-      downloadBtn: downloadPdfBtn,
-      bookPage,
-      updateBookContent,
-      totalPages: TOTAL_PAGES,
-      getCurrentPage: () => currentPage,
-      setCurrentPage: (page) => { currentPage = page; },
-      fileName: 'Libro-de-recuerdos.pdf',
-    });
+    try {
+      window.initPdfDownload({
+        downloadBtn: downloadPdfBtn,
+        bookPage,
+        updateBookContent,
+        totalPages: TOTAL_PAGES,
+        getCurrentPage: () => currentPage,
+        setCurrentPage: (page) => { currentPage = page; },
+        fileName: 'Libro-de-recuerdos.pdf',
+      });
+      console.log('✅ Sistema PDF inicializado exitosamente');
+    } catch (err) {
+      console.error('❌ Error al inicializar PDF:', err);
+      downloadPdfBtn.disabled = true;
+      downloadPdfBtn.textContent = 'Error en PDF';
+    }
+  } else {
+    console.error('❌ initPdfDownload no está disponible');
   }
 
   updateBookContent(currentPage);
