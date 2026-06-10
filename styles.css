@@ -1,0 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Noto+Sans:wght@400;500&display=swap');
+
+:root {
+  --bg-primary: #fff0f3;
+  --bg-secondary: #fff5eb;
+  --paper: #fff8f0;
+  --rose: #d88a9b;
+  --rose-dark: #b15467;
+  --gold: #d8b57a;
+  --text: #4b2f35;
+  --text-soft: #6f4f55;
+  --shadow: 0 22px 60px rgba(87, 44, 56, 0.14);
+  --radius: 28px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  font-family: 'Noto Sans', 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.92), transparent 42%),
+              linear-gradient(180deg, #fef2f3 0%, #fedfe2 28%, #fffaf6 100%);
+  color: var(--text);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(248, 193, 214, 0.2) 12%, transparent 13%),
+                    radial-gradient(circle, rgba(255, 230, 216, 0.25) 10%, transparent 11%);
+  background-size: 120px 120px;
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+.page-wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px 18px;
+}
+
+.access-screen,
+.book-screen {
+  width: min(1000px, 100%);
+  max-width: 960px;
+}
+
+.access-screen {
+  position: relative;
+}
+
+.access-card {
+  position: relative;
+  background: rgba(255, 250, 246, 0.95);
+  padding: 42px 32px 36px;
+  border-radius: 36px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+
+.access-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.8), transparent 34%);
+  pointer-events: none;
+}
+
+.access-card h1 {
+  margin: 0 0 18px;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: #ae6378;
+  text-shadow: 0 5px 18px rgba(181, 89, 106, 0.18);
+  font-family: 'Dancing Script', 'Segoe UI', cursive;
+}
+
+.intro-text {
+  margin: 0 0 28px;
+  font-size: 1.12rem;
+  color: var(--text-soft);
+  max-width: 520px;
+  line-height: 1.7;
+}
+
+.input-group {
+  display: grid;
+  gap: 16px;
+}
+
+.access-card input {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 18px;
+  border: 1px solid rgba(181, 135, 135, 0.26);
+  padding: 0 18px;
+  font-size: 1rem;
+  color: #5a3b43;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.access-card button {
+  min-height: 56px;
+  border: none;
+  border-radius: 18px;
+  color: white;
+  background: linear-gradient(135deg, #df8aa6, #ca6a84);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.access-card button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(204, 114, 147, 0.24);
+}
+
+.error-message {
+  margin-top: 20px;
+  color: #9d3a4f;
+  font-weight: 600;
+}
+
+.sparkle {
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.7), transparent 42%);
+  filter: blur(4px);
+}
+
+.book-screen {
+  display: none;
+}
+
+.book-screen.active {
+  display: block;
+}
+
+/* Book content layout */
+
+.book-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.book-header .label {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #a6707a;
+  font-size: 0.82rem;
+}
+
+.book-header h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 2.7rem);
+  line-height: 1.05;
+  font-family: 'Dancing Script', cursive;
+  color: #784252;
+}
+
+.page-counter {
+  padding: 14px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(190, 131, 129, 0.24);
+  background: rgba(255, 255, 255, 0.72);
+  color: #6d4b52;
+  font-weight: 600;
+}
+
+.book-frame {
+  background: linear-gradient(150deg, #fff7f0 0%, #ffecea 48%, #fff9f5 100%);
+  padding: 24px;
+  border-radius: 38px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+.book-page {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: 1fr;
+  align-items: start;
+  background: linear-gradient(180deg, rgba(255, 255, 248, 0.98), rgba(255, 245, 239, 0.98));
+  padding: 30px;
+  border-radius: 30px;
+  min-height: 520px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(210, 163, 143, 0.16);
+}
+
+.book-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at top right, rgba(255, 255, 255, 0.52), transparent 28%),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0%, transparent 15%);
+  pointer-events: none;
+}
+
+.page-image {
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5), 0 18px 40px rgba(163, 93, 110, 0.12);
+}
+
+.page-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.page-text {
+  position: relative;
+  padding: 28px 28px 22px;
+  background: rgba(255, 250, 245, 0.96);
+  border-radius: 24px;
+  border: 1px solid rgba(216, 180, 154, 0.22);
+}
+
+.page-text p {
+  margin: 0 0 18px;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  line-height: 1.8;
+  color: #5a3d43;
+  font-family: 'Dancing Script', cursive;
+}
+
+.page-number {
+  display: inline-flex;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: rgba(216, 159, 148, 0.14);
+  color: #8a5b64;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.book-actions {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.nav-btn,
+.restart-btn {
+  min-width: 140px;
+  border: none;
+  border-radius: 999px;
+  padding: 16px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  background: linear-gradient(135deg, #d99aa4, #c9787f);
+  color: white;
+}
+
+.nav-btn.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  background: rgba(194, 150, 162, 0.38);
+}
+
+.nav-btn:hover:not(.disabled),
+.restart-btn:hover {
+  transform: translateY(-1px);
+}
+
+.restart-btn {
+  margin: 22px auto 0;
+  display: block;
+  background: linear-gradient(135deg, #f4d0a7, #d7a76a);
+  color: #5c3a31;
+}
+
+.hidden {
+  display: none;
+}
+
+.page-transition {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.page-transition.fade-out {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+@media (min-width: 860px) {
+  .book-page {
+    grid-template-columns: 1.1fr 0.9fr;
+    min-height: 520px;
+  }
+
+  .page-image,
+  .page-text {
+    min-height: 420px;
+  }
+}
+
+@media (max-width: 640px) {
+  .access-card {
+    padding: 28px 22px 26px;
+  }
+
+  .book-frame {
+    padding: 20px;
+  }
+
+  .book-page {
+    padding: 24px;
+  }
+
+  .page-text {
+    padding: 22px 20px 18px;
+  }
+
+  .book-actions {
+    flex-direction: column;
+  }
+
+  .nav-btn,
+  .restart-btn {
+    width: 100%;
+  }
+}

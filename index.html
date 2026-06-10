@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Un regalo para vos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-wrap">
+    <section class="access-screen active" id="accessScreen">
+      <div class="access-card">
+        <div class="sparkle"></div>
+        <h1>Un regalo para vos</h1>
+        <p class="intro-text">Ingresá la clave para abrir este recuerdo</p>
+
+        <div class="input-group">
+          <input id="accessInput" type="password" placeholder="Escribí la clave aquí" autocomplete="off" aria-label="Clave de acceso">
+          <button id="openBookBtn" type="button">Abrir libro</button>
+        </div>
+
+        <p class="error-message" id="errorMessage" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="book-screen" id="bookScreen" aria-hidden="true">
+      <div class="book-header">
+        <div>
+          <span class="label">Libro de recuerdos</span>
+          <h2>Para vos, mi amor</h2>
+        </div>
+        <div class="page-counter" id="pageCounter">Página 1 de 10</div>
+      </div>
+
+      <div class="book-frame">
+        <div class="book-page page-transition" id="bookPage">
+          <div class="page-image">
+            <img id="pageImage" src="assets/images/foto1.jpg" alt="Foto de recuerdo 1">
+          </div>
+          <div class="page-text">
+            <p id="pageText"></p>
+            <div class="page-number">Página <span id="pageNumber">1</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-actions">
+        <button id="prevBtn" class="nav-btn disabled" type="button" disabled>Anterior</button>
+        <button id="nextBtn" class="nav-btn" type="button">Siguiente</button>
+      </div>
+
+      <button id="restartBtn" class="restart-btn hidden" type="button">Volver a leer</button>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
