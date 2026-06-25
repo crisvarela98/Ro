@@ -80,11 +80,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (page === TOTAL_PAGES) {
       nextBtn.textContent = 'Final';
       restartBtn.classList.remove('hidden');
-      downloadPdfBtn.classList.remove('hidden');
+      downloadPdfBtn.classList.remove('locked');
+      downloadPdfBtn.disabled = false;
+      downloadPdfBtn.title = '';
+      downloadPdfBtn.textContent = '📥 Descargar PDF';
     } else {
       nextBtn.textContent = 'Siguiente';
       restartBtn.classList.add('hidden');
-      downloadPdfBtn.classList.add('hidden');
+      downloadPdfBtn.classList.add('locked');
+      downloadPdfBtn.disabled = true;
+      downloadPdfBtn.title = `Llegá a la página 10 para desbloquear`;
+      downloadPdfBtn.textContent = `🔒 PDF (pág. ${page}/10)`;
     }
   }
 
