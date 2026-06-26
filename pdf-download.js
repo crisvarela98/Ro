@@ -60,9 +60,10 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
     img.style.cssText = `
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
       display: block;
+      background: #fff5f0;
     `;
     imgCol.appendChild(img);
 
