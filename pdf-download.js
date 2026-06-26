@@ -89,13 +89,9 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
     img.id = 'pdf-img';
     img.crossOrigin = 'anonymous';
     img.style.cssText = `
+      display: block;
       max-width: 100%;
       max-height: 100%;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center;
-      display: block;
     `;
     imgCol.appendChild(img);
 
@@ -224,9 +220,13 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
         const activeImg  = document.getElementById('pageImage');
         const activeText = document.getElementById('pageText');
 
-        captureImg.src = activeImg ? activeImg.src : '';
         captureText.textContent = activeText ? activeText.textContent : '';
         capturePageNum.textContent = `${page}  /  ${totalPages}`;
+
+        // Resetear dimensiones antes de cargar nueva imagen
+        captureImg.style.width  = '';
+        captureImg.style.height = '';
+        captureImg.src = activeImg ? activeImg.src : '';
 
         // Esperar carga de imagen con timeout
         if (captureImg.src) {
@@ -237,6 +237,15 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
             setTimeout(res, 5000);
           });
         }
+
+        // Calcular dimensiones reales manteniendo proporción (html2canvas ignora object-fit)
+        const imgColW = Math.round(CAPTURE_W * 0.68);
+        const imgColH = CAPTURE_H - 52; // restar altura del header
+        const natW = captureImg.naturalWidth  || imgColW;
+        const natH = captureImg.naturalHeight || imgColH;
+        const scale = Math.min(imgColW / natW, imgColH / natH);
+        captureImg.style.width  = `${Math.round(natW * scale)}px`;
+        captureImg.style.height = `${Math.round(natH * scale)}px`;
 
         // Pequeña espera extra para que el render sea estable
         await sleep(250);

@@ -5,15 +5,15 @@ const ACCESS_KEY = '26102025';
 const PAGE_DATA = [
   {
     image: 'foto1.jpg',
-    text: 'Cada momento a tu lado es una página nueva de este libro que escribimos juntos. Mi corazón guarda las sonrisas de tus ojos y esa calma que me regalas al estar a tu lado.'
+    text: 'Cada momento a tu lado es una página nueva de este libro que escribimos juntos. Mi corazón guarda tu sonrisa y la mirada de tus ojos junto a la calma que me regalas al estar a tu lado. Te amo hoy, mañana y siempre.'
   },
   {
     image: 'foto2.jpg',
-    text: 'Este libro tiene fotos y muchas pruebas de que juntos hacemos un muy buen equipo... Podría escribir mil cosas sobre esta foto, pero la verdad es que cada vez que te miro pienso lo mismo: ¿cómo hice para enamorarla?.'
+    text: 'Este libro tiene fotos y muchas pruebas de que juntos hacemos un muy buen equipo... Podría escribir mil cosas sobre esta foto, pero la verdad es que cada vez que te miro pienso lo mismo: ¿cómo hice para enamorarla?. Sos mi mejor decisión, mi mejor momento y mi mejor futuro.'
   },
   {
     image: 'foto3.jpg',
-    text: 'Nuestra pequeña familia improvisada. Entre mantas, mimos y momentos simples, ustedes son mi motor para hacer muchas cosas, todo lo que busco y trato de hacer es para poder darles lo mejor a ustedes.'
+    text: 'Nuestra pequeña familia improvisada. Entre mantas, mimos y momentos simples, ustedes son mi motor para hacer muchas cosas, todo lo que busco y trato de hacer es para poder darles lo mejor a ustedes. Siempre los amo y los cuido.'
   },
   {
     image: 'foto4.jpg',
