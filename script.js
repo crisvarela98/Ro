@@ -17,7 +17,7 @@ const PAGE_DATA = [
   },
   {
     image: 'foto4.jpg',
-    text: 'Esta es una de mis fotos favoritas, tambien es una foto que me da gracia. Me aceptaste sabiendo que venia con un paquete y me hace bien saber que queres a mi hijo y lo cuidas.'
+    text: 'Esta es una de mis fotos favoritas, tambien es una foto que me da gracia. Me aceptaste sabiendo que venia con un paquete (y de los complicados) y me hace bien saber que queres a mi hijo y lo cuidas.'
   },
   {
     image: 'foto5.jpg',
@@ -29,7 +29,7 @@ const PAGE_DATA = [
   },
   {
     image: 'foto7.jpg',
-    text: 'Me enamora verte así, modod sexy atrevida y también relajada, siendo vos misma. Porque entendí que el amor no son solo las grandes aventuras, también son los momneots juntos, las tardes de fiaca y las charlas antes de dormir.'
+    text: 'Me enamora verte así, modo sexy atrevida y también relajada, siendo vos misma. Porque entendí que el amor no son solo las grandes aventuras, sino también los momentos juntos, las tardes de fiaca y las charlas antes de dormir.'
   },
   {
     image: 'foto8.jpg',
@@ -41,7 +41,7 @@ const PAGE_DATA = [
   },
   {
     image: 'foto10.jpg',
-    text: 'Gracias por cada risa, cada abrazo y cada momento compartido. Prometo seguir llenando este libro con más recuerdos, más aventuras y más fotos donde salgo despeinado, barbudo con cara de dormido y vos salís hermosa. Te amo hoy, mañana y en todas nuestras próximas páginas. ❤️'
+    text: 'Gracias por cada risa, cada abrazo y cada momento compartido. Prometo seguir llenando este libro con más recuerdos, más aventuras y más fotos donde salgo despeinado, barbudo y con cara de dormido, mientras vos salís hermosa. Te amo hoy, mañana y en todas nuestras próximas páginas. ❤️'
   }
 ];
 
