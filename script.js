@@ -1,8 +1,7 @@
 // Clave de acceso para abrir el libro. Cambiala fácilmente aquí.
-const ACCESS_KEY = '12345678';
+const ACCESS_KEY = '26102025';
 
-// Contenido de cada página del libro.
-// Cambia el texto y el nombre de la imagen para personalizar cada página.
+
 const PAGE_DATA = [
   {
     image: 'foto1.jpg',
@@ -10,39 +9,39 @@ const PAGE_DATA = [
   },
   {
     image: 'foto2.jpg',
-    text: 'Tus risas se convierten en la melodía más dulce que escucho cada día. Me enamoro de tu forma de ser, de tu ternura en los gestos pequeños y de las palabras que nunca dejan de abrazarme.'
+    text: 'Este libro tiene fotos y muchas pruebas de que juntos hacemos un muy buen equipo... Podría escribir mil cosas sobre esta foto, pero la verdad es que cada vez que te miro pienso lo mismo: ¿cómo hice para enamorarla?.'
   },
   {
     image: 'foto3.jpg',
-    text: 'Cada abrazo tuyo es un refugio cálido donde me siento en casa. Contar nuestras anécdotas y soñar juntos es la prueba de que cada instante a tu lado vale infinitamente más.'
+    text: 'Nuestra pequeña familia improvisada. Entre mantas, mimos y momentos simples, ustedes son mi motor para hacer muchas cosas, todo lo que busco y trato de hacer es para poder darles lo mejor a ustedes.'
   },
   {
     image: 'foto4.jpg',
-    text: 'En este libro hay recuerdos de caminatas, miradas cómplices, cafés compartidos y sueños dibujados de la mano. Gracias por ser mi compañera de aventuras y mi cómplice de ternura.'
+    text: 'Esta es una de mis fotos favoritas, tambien es una foto que me da gracia. Me aceptaste sabiendo que venia con un paquete y me hace bien saber que queres a mi hijo y lo cuidas.'
   },
   {
     image: 'foto5.jpg',
-    text: 'Eres la razón por la que celebro los pequeños detalles. Cuando pienso en vos, siento una alegría suave y profunda que transforma cualquier día en un día especial.'
+    text: 'Sos la razón por la que celebro los pequeños detalles. Cuando pienso en vos, siento una alegría suave y profunda que transforma cualquier día en un día especial.'
   },
   {
     image: 'foto6.jpg',
-    text: 'Gracias por cada gesto, cada palabra de aliento, cada momento en el que me comprendiste sin que dijera nada. Tu amor me inspira a ser mejor cada día.'
+    text: 'Creo en que nuestros momentos siempre son especiales porque no importa el lugar, siempre terminamos hablando de sueños, haciendo chistes malos o riéndonos de cualquier cosa y vos poniéndome esa cara de culo que me encanta.'
   },
   {
     image: 'foto7.jpg',
-    text: 'Contar nuestras historias es descubrir que el amor verdadero se construye con cariño, paciencia y ganas de mirarse a los ojos. Me encanta imaginar todo lo que nos espera por vivir.'
+    text: 'Me enamora verte así, modod sexy atrevida y también relajada, siendo vos misma. Porque entendí que el amor no son solo las grandes aventuras, también son los momneots juntos, las tardes de fiaca y las charlas antes de dormir.'
   },
   {
     image: 'foto8.jpg',
-    text: 'Tus manos son un abrazo permanente y tu voz es mi canción favorita. Me pierdo en tus detalles y me encuentro en lo nuestro, en el brillo de nuestra complicidad.'
+    text: 'Esta página está vacía porque todavía nos quedan muchísimas fotos por sacar, viajes por hacer y recuerdos por tener juntos. Pero sé que cada página que escribimos juntos es una prueba de que el amor es una historia que nunca termina.'
   },
   {
     image: 'foto9.jpg',
-    text: 'Juntos hemos tejido un mundo lleno de ternura, magia y promesas que todavía quiero seguir escribiendo. Siempre te elijo, hoy y todos los días que quedan por venir.'
+    text: 'Juntos formamos un mundo lleno de ternura, magia y promesas que todavía quiero seguir escribiendo. Siempre te elijo, hoy y todos los días que quedan por venir.'
   },
   {
     image: 'foto10.jpg',
-    text: 'Gracias por cada momento juntos. Este libro es solo una pequeña parte de todo lo que siento por vos. Te amo con todo mi corazón, hoy, mañana y siempre. ❤️'
+    text: 'Gracias por cada risa, cada abrazo y cada momento compartido. Prometo seguir llenando este libro con más recuerdos, más aventuras y más fotos donde salgo despeinado, barbudo con cara de dormido y vos salís hermosa. Te amo hoy, mañana y en todas nuestras próximas páginas. ❤️'
   }
 ];
 
