@@ -8,7 +8,7 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   let isGeneratingPdf = false;
 
-  // Dimensiones del contenedor de captura (landscape A4 a 150dpi aprox)
+  // A4 landscape a 150dpi: 297mm × 210mm → px
   const CAPTURE_W = 1587;
   const CAPTURE_H = 1122;
 
@@ -22,7 +22,6 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
     return { html2canvas: null, jsPDF: null };
   };
 
-  // Crea el contenedor oculto de alta calidad para captura
   const crearContenedorCaptura = () => {
     const existing = document.getElementById('pdf-capture-container');
     if (existing) existing.remove();
@@ -35,92 +34,140 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
       top: 0;
       width: ${CAPTURE_W}px;
       height: ${CAPTURE_H}px;
-      background: linear-gradient(180deg, #fff8f0 0%, #fff5ec 100%);
-      border-radius: 0;
+      background: #fffaf6;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       overflow: hidden;
-      font-family: 'Lora', Georgia, serif;
-      z-index: -1;
+      font-family: Georgia, serif;
     `;
 
-    // Columna izquierda: imagen
+    /* ── Franja superior ── */
+    const header = document.createElement('div');
+    header.style.cssText = `
+      width: 100%;
+      height: 52px;
+      background: linear-gradient(90deg, #c97b8e, #d8a87c);
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    `;
+    const headerTitle = document.createElement('span');
+    headerTitle.textContent = 'Libro de recuerdos';
+    headerTitle.style.cssText = `
+      color: white;
+      font-size: 22px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-family: Georgia, serif;
+    `;
+    header.appendChild(headerTitle);
+
+    /* ── Cuerpo: imagen + texto ── */
+    const body = document.createElement('div');
+    body.style.cssText = `
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      min-height: 0;
+    `;
+
+    /* Columna imagen */
     const imgCol = document.createElement('div');
-    imgCol.id = 'pdf-img-col';
     imgCol.style.cssText = `
-      width: 65%;
+      width: 68%;
       height: 100%;
       overflow: hidden;
       flex-shrink: 0;
-      position: relative;
+      background: #f5ece8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     `;
     const img = document.createElement('img');
     img.id = 'pdf-img';
     img.crossOrigin = 'anonymous';
     img.style.cssText = `
+      max-width: 100%;
+      max-height: 100%;
       width: 100%;
       height: 100%;
       object-fit: contain;
       object-position: center;
       display: block;
-      background: #fff5f0;
     `;
     imgCol.appendChild(img);
 
-    // Columna derecha: texto + número de página
+    /* Columna texto */
     const textCol = document.createElement('div');
-    textCol.id = 'pdf-text-col';
     textCol.style.cssText = `
-      width: 35%;
+      flex: 1;
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
-      padding: 60px 50px;
-      background: linear-gradient(160deg, #fff8f5, #fff0ec);
+      padding: 52px 48px 40px 48px;
       box-sizing: border-box;
-      position: relative;
+      background: linear-gradient(160deg, #fffaf7 0%, #fff3ee 100%);
+      border-left: 1px solid rgba(200,150,140,0.18);
     `;
 
-    const decorLine = document.createElement('div');
-    decorLine.style.cssText = `
-      width: 48px;
-      height: 4px;
-      background: linear-gradient(90deg, #d88a9b, #d8b57a);
-      border-radius: 4px;
-      margin-bottom: 32px;
+    /* Florcita decorativa */
+    const deco = document.createElement('div');
+    deco.style.cssText = `
+      font-size: 28px;
+      margin-bottom: 24px;
+      color: #c97b8e;
     `;
+    deco.textContent = '❤';
 
     const textNode = document.createElement('p');
     textNode.id = 'pdf-text';
     textNode.style.cssText = `
-      font-family: 'Lora', Georgia, serif;
+      font-family: Georgia, 'Times New Roman', serif;
       font-style: italic;
-      font-size: 28px;
-      line-height: 1.8;
+      font-size: 26px;
+      line-height: 1.85;
       color: #4c2a33;
       margin: 0 0 auto 0;
       word-break: break-word;
     `;
 
+    /* Número de página */
+    const pageNumWrap = document.createElement('div');
+    pageNumWrap.style.cssText = `
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    `;
+    const pageNumLine = document.createElement('div');
+    pageNumLine.style.cssText = `
+      height: 1px;
+      width: 32px;
+      background: #c97b8e;
+    `;
     const pageNum = document.createElement('span');
     pageNum.id = 'pdf-pagenum';
     pageNum.style.cssText = `
-      margin-top: 40px;
-      font-family: 'Noto Sans', sans-serif;
-      font-size: 20px;
+      font-family: Georgia, serif;
+      font-size: 18px;
       color: #b07080;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      letter-spacing: 0.12em;
     `;
+    pageNumWrap.appendChild(pageNumLine);
+    pageNumWrap.appendChild(pageNum);
 
-    textCol.appendChild(decorLine);
+    textCol.appendChild(deco);
     textCol.appendChild(textNode);
-    textCol.appendChild(pageNum);
+    textCol.appendChild(pageNumWrap);
 
-    wrap.appendChild(imgCol);
-    wrap.appendChild(textCol);
+    body.appendChild(imgCol);
+    body.appendChild(textCol);
+
+    wrap.appendChild(header);
+    wrap.appendChild(body);
     document.body.appendChild(wrap);
     return wrap;
   };
@@ -141,12 +188,10 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
       downloadBtn.style.opacity = '0.6';
 
       const { html2canvas, jsPDF } = await cargarLibrerias();
-
       if (!html2canvas || !jsPDF) {
         throw new Error('No se pudieron cargar las librerías. Recargá la página e intentá de nuevo.');
       }
 
-      // PDF en landscape A4
       const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'pt',
@@ -162,66 +207,55 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
 
       const originalPage = getCurrentPage();
       const captureWrap = crearContenedorCaptura();
-      const captureImg = document.getElementById('pdf-img');
+      const captureImg  = document.getElementById('pdf-img');
       const captureText = document.getElementById('pdf-text');
       const capturePageNum = document.getElementById('pdf-pagenum');
-
-      // Cargar fuente de Google para el contenedor oculto
-      if (!document.getElementById('pdf-font-link')) {
-        const link = document.createElement('link');
-        link.id = 'pdf-font-link';
-        link.rel = 'stylesheet';
-        link.href = 'https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap';
-        document.head.appendChild(link);
-        await sleep(800);
-      }
 
       const pdfW = pdf.internal.pageSize.getWidth();
       const pdfH = pdf.internal.pageSize.getHeight();
 
       for (let page = 1; page <= totalPages; page++) {
-        downloadBtn.textContent = `⏳ ${Math.round((page / totalPages) * 100)}% (${page}/${totalPages})`;
+        downloadBtn.textContent = `⏳ ${Math.round((page / totalPages) * 100)}% — pág. ${page}/${totalPages}`;
 
-        // Obtener datos de la página actual desde el libro
         setCurrentPage(page);
         updateBookContent(page);
-        await sleep(300);
+        await sleep(400);
 
-        // Obtener src de la imagen activa
-        const activeImg = document.getElementById('pageImage');
+        const activeImg  = document.getElementById('pageImage');
         const activeText = document.getElementById('pageText');
 
         captureImg.src = activeImg ? activeImg.src : '';
         captureText.textContent = activeText ? activeText.textContent : '';
-        capturePageNum.textContent = `${page} / ${totalPages}`;
+        capturePageNum.textContent = `${page}  /  ${totalPages}`;
 
-        // Esperar a que la imagen cargue
+        // Esperar carga de imagen con timeout
         if (captureImg.src) {
           await new Promise((res) => {
             if (captureImg.complete && captureImg.naturalWidth > 0) return res();
-            captureImg.onload = res;
+            captureImg.onload  = res;
             captureImg.onerror = res;
-            setTimeout(res, 4000);
+            setTimeout(res, 5000);
           });
         }
 
-        await sleep(200);
+        // Pequeña espera extra para que el render sea estable
+        await sleep(250);
 
         const canvas = await html2canvas(captureWrap, {
-          backgroundColor: '#fff8f0',
-          scale: 2,
+          backgroundColor: '#fffaf6',
+          scale: 3,
           useCORS: true,
           allowTaint: true,
           logging: false,
-          width: CAPTURE_W,
+          width:  CAPTURE_W,
           height: CAPTURE_H,
           imageTimeout: 30000,
         });
 
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        const imgData = canvas.toDataURL('image/jpeg', 0.97);
         pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH);
-
         if (page < totalPages) pdf.addPage();
+
         console.log(`✅ Página ${page}/${totalPages}`);
       }
 
@@ -231,7 +265,7 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
 
       pdf.save(fileName);
 
-      downloadBtn.textContent = '✅ PDF Descargado';
+      downloadBtn.textContent = '✅ ¡PDF listo!';
       downloadBtn.style.background = '#51cf66';
       setTimeout(() => {
         downloadBtn.textContent = previousLabel;
@@ -246,7 +280,7 @@ window.initPdfDownload = ({ downloadBtn, bookPage, updateBookContent, totalPages
     } finally {
       downloadBtn.disabled = false;
       downloadBtn.style.opacity = '1';
-      downloadBtn.style.cursor = 'pointer';
+      downloadBtn.style.cursor  = 'pointer';
       isGeneratingPdf = false;
     }
   });
